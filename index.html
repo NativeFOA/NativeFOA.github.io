@@ -1,83 +1,35 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NativeFOA: representation, editing, and benchmarking for spatial audio.">
-  <title>NativeFOA · Spatial Audio Editing</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b1828'/%3E%3Cpath d='M13 34c8-18 30-18 38 0' fill='none' stroke='%2348c9b0' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='34' r='5' fill='%23ffb454'/%3E%3Cpath d='M45 24l7 10-12 1z' fill='%2348c9b0'/%3E%3C/svg%3E">
-  <style>
-    :root { --ink:#102235; --muted:#617286; --paper:#f4f8fb; --surface:#fff; --line:#d8e2eb; --blue:#2f6fec; --mint:#16a085; --coral:#e8664a; --navy:#0b1828; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; background:radial-gradient(circle at 12% 0%,rgba(47,111,236,.11),transparent 33rem),var(--paper); color:var(--ink); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:16px; line-height:1.6; }
-    .wrap { width:min(1080px,calc(100% - 40px)); margin-inline:auto; }
-    header { padding:72px 0 58px; text-align:center; }
-    .eyebrow { margin-bottom:12px; color:var(--blue); font-size:.78rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
-    h1 { max-width:980px; margin:0 auto 18px; font-size:clamp(2.35rem,5.4vw,4.65rem); line-height:1.02; letter-spacing:-.05em; }
-    .venue { margin:0 0 26px; color:var(--muted); font-size:1.05rem; font-weight:700; }
-    .authors { max-width:920px; margin:0 auto 8px; font-size:1.04rem; }
-    .affiliations { max-width:860px; margin:0 auto 28px; color:var(--muted); font-size:.9rem; }
-    .actions { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
-    .action { display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid var(--navy); border-radius:999px; background:var(--navy); color:white; font-size:.9rem; font-weight:750; box-shadow:0 8px 20px rgba(11,24,40,.12); opacity:.72; }
-    .action small { color:#b9c6d3; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; }
-    main { padding-bottom:78px; }
-    section { padding:54px 0; border-top:1px solid var(--line); }
-    .section-title { margin:0 0 22px; font-size:clamp(1.75rem,3vw,2.55rem); line-height:1.12; letter-spacing:-.035em; }
-    .abstract { max-width:900px; margin:0 auto; color:#304258; font-size:1.04rem; text-align:justify; }
-    .task-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .task { position:relative; overflow:hidden; min-height:235px; padding:25px; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:0 18px 45px rgba(34,57,82,.07); }
-    .task::after { content:""; position:absolute; right:-36px; bottom:-44px; width:150px; height:150px; border:22px solid var(--accent); border-radius:50%; opacity:.08; }
-    .task:nth-child(1) { --accent:var(--blue); } .task:nth-child(2) { --accent:var(--coral); } .task:nth-child(3) { --accent:var(--mint); }
-    .task__number { color:var(--accent); font-size:.76rem; font-weight:800; letter-spacing:.1em; }
-    .task h3 { margin:30px 0 8px; font-size:1.55rem; letter-spacing:-.025em; }
-    .task p { margin:0; color:var(--muted); }
-    .demo-shell { overflow:hidden; border:1px solid var(--line); border-radius:20px; background:var(--surface); box-shadow:0 18px 45px rgba(34,57,82,.07); }
-    .demo-tabs { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--line); }
-    .demo-tab { padding:16px; text-align:center; font-weight:750; }
-    .demo-tab:first-child { background:#eaf0ff; color:#244fba; box-shadow:inset 0 -3px var(--blue); }
-    .empty { display:grid; min-height:250px; place-items:center; padding:38px; text-align:center; }
-    .empty__icon { display:grid; width:66px; height:66px; margin:0 auto 17px; place-items:center; border-radius:50%; background:#edf3ff; color:var(--blue); font-size:1.7rem; }
-    .empty h3 { margin:0 0 6px; font-size:1.3rem; } .empty p { margin:0; color:var(--muted); }
-    footer { padding:24px 0 38px; border-top:1px solid var(--line); color:var(--muted); font-size:.86rem; }
-    footer .wrap { display:flex; justify-content:space-between; gap:20px; }
-    @media(max-width:760px) { .wrap{width:min(100% - 24px,1080px)} header{padding-top:46px} .task-grid{grid-template-columns:1fr} .task{min-height:190px} .demo-tab{padding:13px 7px;font-size:.88rem} .abstract{text-align:left} footer .wrap{display:block} }
-  </style>
-</head>
-<body>
-  <header class="wrap">
-    <p class="eyebrow">Native spatial audio editing</p>
-    <h1>NativeFOA: Representation, Editing, and Benchmarking for Spatial Audio</h1>
-    <p class="venue">Project page</p>
-    <p class="authors">Zining Liang · Junjie Shi · Runbang Wang · Shlomo Dubnov · Xuzhou Ye · Qiuqiang Kong</p>
-    <p class="affiliations">The Chinese University of Hong Kong · ByteDance · University of California San Diego</p>
-    <nav class="actions" aria-label="Project resources">
-      <span class="action">Paper <small>Coming soon</small></span>
-      <span class="action">Code <small>Coming soon</small></span>
-      <span class="action">Benchmark <small>Coming soon</small></span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Binauralized FOA demonstrations for NativeFOA spatial audio editing." />
+    <title>NativeFOA: Representation, Editing, and Benchmark for Spatial Audio</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b1828'/%3E%3Cpath d='M13 34c8-18 30-18 38 0' fill='none' stroke='%2348c9b0' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='34' r='5' fill='%23ffb454'/%3E%3Cpath d='M45 24l7 10-12 1z' fill='%2348c9b0'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=20260924c" />
+    <script src="app.js?v=20260924c" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <h1>NativeFOA: Representation, Editing, and Benchmark for Spatial Audio</h1>
+      <p class="hero__intro">FOA audio has been binauralized for demonstration. Headphones are recommended.</p>
+      <div class="resource-links" aria-label="Project resources">
+        <a class="resource-link resource-link--active" href="#cases" aria-current="page">Demo</a>
+        <a class="resource-link resource-link--external" href="https://oscar-foa-vae.pages.dev/#sample=530swnPWJrQ_17" target="_blank" rel="noopener noreferrer">FOA VAE Reconstruction Demo</a>
+        <span class="resource-link is-disabled" aria-disabled="true" title="Coming soon">Code <small>Coming soon</small></span>
+        <span class="resource-link is-disabled" aria-disabled="true" title="Coming soon">Dataset <small>Coming soon</small></span>
+      </div>
+    </header>
+    <nav class="task-nav" aria-label="Audio demo tasks">
+      <div class="task-nav__inner">
+        <button class="task-tab is-active" data-task-tab="remove" aria-selected="true">Remove</button>
+        <button class="task-tab" data-task-tab="move" aria-selected="false">Move</button>
+        <button class="task-tab" data-task-tab="replace" aria-selected="false">Replace</button>
+      </div>
     </nav>
-  </header>
-  <main class="wrap">
-    <section>
-      <h2 class="section-title">Abstract</h2>
-      <p class="abstract">NativeFOA is a unified framework for spatial audio representation, instruction-guided editing, and evaluation directly in the first-order Ambisonics domain. It combines a spatially faithful latent representation with conditional flow matching to support trajectory modification, source removal, and source replacement while preserving the surrounding sound field.</p>
-    </section>
-    <section>
-      <h2 class="section-title">Three editing tasks</h2>
-      <div class="task-grid">
-        <article class="task"><span class="task__number">01</span><h3>Move</h3><p>Relocate a target source along a specified trajectory and within an optional time interval.</p></article>
-        <article class="task"><span class="task__number">02</span><h3>Remove</h3><p>Selectively eliminate a semantic or spatially specified target while retaining the interferer.</p></article>
-        <article class="task"><span class="task__number">03</span><h3>Replace</h3><p>Insert new source content while inheriting the target's spatial and acoustic attributes.</p></article>
-      </div>
-    </section>
-    <section>
-      <h2 class="section-title">Audio demonstrations</h2>
-      <div class="demo-shell">
-        <div class="demo-tabs"><div class="demo-tab">Move</div><div class="demo-tab">Remove</div><div class="demo-tab">Replace</div></div>
-        <div class="empty"><div><div class="empty__icon">◉</div><h3>Audio cases are coming soon</h3><p>Interactive trajectories and baseline comparisons will appear here.</p></div></div>
-      </div>
-    </section>
-  </main>
-  <footer><div class="wrap"><span>NativeFOA</span><span>Spatial audio editing in the native FOA domain</span></div></footer>
-</body>
+    <main>
+      <section id="cases" class="cases" aria-label="Audio cases"></section>
+    </main>
+    <footer>NativeFOA · Local research preview</footer>
+  </body>
 </html>
