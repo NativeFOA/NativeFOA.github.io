@@ -141,12 +141,12 @@ function initVaeList(){
   }),{rootMargin:'500px 0px'});
   frames.forEach(frame=>observer.observe(frame));
 }
-function showPage(page,{scroll=false}={}){
+function showPage(page,{scroll=false,updateHash=true}={}){
   const next=['vae','editor'].includes(page)?page:'editor';
   document.querySelectorAll('[data-page-panel]').forEach(panel=>{panel.hidden=panel.dataset.pagePanel!==next});
   document.querySelectorAll('.module-button').forEach(button=>button.classList.toggle('is-active',button.dataset.page===next));
   if(next==='vae')initVaeList();
-  history.replaceState(null,'',`#${next}`);
+  if(updateHash)history.replaceState(null,'',`#${next}`);
   if(scroll)document.querySelector('.module-switcher')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function initPageSwitcher(){
@@ -158,8 +158,16 @@ function initPageSwitcher(){
     }
     showPage(location.hash.slice(1),{scroll:true});
   });
-  showPage(location.hash.slice(1));
+  const initial=location.hash.slice(1);
+  if(['vae','editor'].includes(initial))showPage(initial,{updateHash:false});
+  else{
+    showPage('editor',{updateHash:false});
+    requestAnimationFrame(()=>scrollTo({top:0,left:0,behavior:'auto'}));
+  }
 }
+
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+addEventListener('pageshow',()=>{if(!location.hash||location.hash==='#top')scrollTo(0,0)});
 
 document.querySelectorAll('.task-button').forEach(button=>button.addEventListener('click',()=>{activeTask=button.dataset.task;document.querySelectorAll('.task-button').forEach(node=>{const on=node===button;node.classList.toggle('is-active',on);node.setAttribute('aria-selected',String(on))});render()}));
 document.addEventListener('click',event=>{const button=event.target.closest('.fake-player');if(!button)return;const audio=button.querySelector('audio');document.querySelectorAll('.fake-player').forEach(node=>{if(node!==button){node.querySelector('audio')?.pause();node.classList.remove('is-playing');const icon=node.querySelector('.play-icon');if(icon)icon.textContent='▶'}});if(audio.paused){audio.play();button.classList.add('is-playing');button.querySelector('.play-icon').textContent='Ⅱ'}else{audio.pause();button.classList.remove('is-playing');button.querySelector('.play-icon').textContent='▶'}});
