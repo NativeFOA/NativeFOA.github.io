@@ -136,7 +136,7 @@ function initVaeList(){
   frames.forEach(frame=>observer.observe(frame));
 }
 function showPage(page,{scroll=false}={}){
-  const next=['vae','editor','bench'].includes(page)?page:'editor';
+  const next=['vae','editor'].includes(page)?page:'editor';
   document.querySelectorAll('[data-page-panel]').forEach(panel=>{panel.hidden=panel.dataset.pagePanel!==next});
   document.querySelectorAll('.module-button').forEach(button=>button.classList.toggle('is-active',button.dataset.page===next));
   if(next==='vae')initVaeList();
@@ -145,7 +145,13 @@ function showPage(page,{scroll=false}={}){
 }
 function initPageSwitcher(){
   document.querySelectorAll('.module-button').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.page,{scroll:true})));
-  addEventListener('hashchange',()=>showPage(location.hash.slice(1),{scroll:true}));
+  addEventListener('hashchange',()=>{
+    if(location.hash==='#top'){
+      document.querySelector('#top')?.scrollIntoView({behavior:'smooth',block:'start'});
+      return;
+    }
+    showPage(location.hash.slice(1),{scroll:true});
+  });
   showPage(location.hash.slice(1));
 }
 
