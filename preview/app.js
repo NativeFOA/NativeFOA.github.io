@@ -88,11 +88,11 @@ function initSoundfield(){
 }
 
 const vaeSamples=[
-  {number:'01',id:'530swnPWJrQ_17'},
-  {number:'02',id:'530swnPWJrQ_5'},
-  {number:'04',id:'RbFEpkuFCjI_18'},
-  {number:'07',id:'nagycDdW04w_10.0'},
-  {number:'09',id:'u-Hpf2_wzB8_390'},
+  {id:'530swnPWJrQ_17'},
+  {id:'RbFEpkuFCjI_18'},
+  {id:'nagycDdW04w_10.0'},
+  {id:'530swnPWJrQ_5'},
+  {id:'p5Ady9RJyhU_90'},
 ];
 let vaeListReady=false;
 function sizeVaeFrame(frame){
@@ -125,7 +125,7 @@ function initVaeList(){
   vaeSamples.forEach(sample=>{
     const item=document.createElement('article');
     item.className='vae-case';
-    item.innerHTML=`<div class="vae-case-number">${sample.number}</div><iframe class="vae-frame" data-src="vae-demo/index.html#sample=${encodeURIComponent(sample.id)}" title="FOA VAE reconstruction example ${sample.number}" loading="lazy" allow="autoplay; fullscreen"></iframe>`;
+    item.innerHTML=`<iframe class="vae-frame" data-src="vae-demo/index.html#sample=${encodeURIComponent(sample.id)}" title="FOA VAE reconstruction example" loading="lazy" allow="autoplay; fullscreen"></iframe>`;
     list.append(item);
   });
   const frames=[...list.querySelectorAll('.vae-frame')];
