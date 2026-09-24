@@ -3,33 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Binauralized FOA demonstrations for NativeFOA spatial audio editing." />
-    <title>NativeFOA: Representation, Editing, and Benchmark for Spatial Audio</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b1828'/%3E%3Cpath d='M13 34c8-18 30-18 38 0' fill='none' stroke='%2348c9b0' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='34' r='5' fill='%23ffb454'/%3E%3Cpath d='M45 24l7 10-12 1z' fill='%2348c9b0'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="styles.css?v=20260924c" />
-    <script src="app.js?v=20260924c" defer></script>
+    <meta name="description" content="NativeFOA representation and instruction-guided spatial audio editing demos." />
+    <title>NativeFOA — Spatial Audio Demo</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b111b'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23e9ff60' stroke-width='4'/%3E%3Ccircle cx='32' cy='13' r='5' fill='%23ff5b4d'/%3E%3Cpath d='M32 32L49 42' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=34" />
+    <script src="app.js?v=34" defer></script>
   </head>
   <body>
-    <header class="hero">
-      <h1>NativeFOA: Representation, Editing, and Benchmark for Spatial Audio</h1>
-      <p class="hero__intro">FOA audio has been binauralized for demonstration. Headphones are recommended.</p>
-      <div class="resource-links" aria-label="Project resources">
-        <a class="resource-link resource-link--active" href="#cases" aria-current="page">Demo</a>
-        <a class="resource-link resource-link--external" href="https://oscar-foa-vae.pages.dev/#sample=530swnPWJrQ_17" target="_blank" rel="noopener noreferrer">FOA VAE Reconstruction Demo</a>
-        <span class="resource-link is-disabled" aria-disabled="true" title="Coming soon">Code <small>Coming soon</small></span>
-        <span class="resource-link is-disabled" aria-disabled="true" title="Coming soon">Dataset <small>Coming soon</small></span>
-      </div>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="NativeFOA home"><span class="brand-mark"></span>NativeFOA</a>
     </header>
-    <nav class="task-nav" aria-label="Audio demo tasks">
-      <div class="task-nav__inner">
-        <button class="task-tab is-active" data-task-tab="remove" aria-selected="true">Remove</button>
-        <button class="task-tab" data-task-tab="move" aria-selected="false">Move</button>
-        <button class="task-tab" data-task-tab="replace" aria-selected="false">Replace</button>
-      </div>
-    </nav>
+
     <main>
-      <section id="cases" class="cases" aria-label="Audio cases"></section>
+      <section class="hero" id="top">
+        <canvas class="soundfield-canvas" id="soundfield-canvas" aria-hidden="true"></canvas>
+        <div class="hero-shade"></div>
+        <div class="hero-panel">
+          <h1>NativeFOA</h1>
+          <p class="hero-title">Representation, Editing, and<br />Benchmark for Spatial Audio</p>
+          <div class="hero-actions" aria-label="Project resources">
+            <a class="action action--dark" href="#editor">Demo</a>
+            <span class="action action--muted">Paper</span>
+            <span class="action action--muted">Code</span>
+            <span class="action action--muted">Dataset</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="module-switcher" aria-label="NativeFOA components">
+        <button class="module-button" data-page="vae" type="button">NativeFOA-VAE</button>
+        <button class="module-button is-active" data-page="editor" type="button">NativeFOA-Editor</button>
+      </nav>
+
+      <section class="demo-section page-panel" id="editor" data-page-panel="editor">
+        <div class="task-switcher" role="tablist" aria-label="Editing task">
+          <button class="task-button is-active" data-task="remove" role="tab" aria-selected="true"><span>01</span>Remove</button>
+          <button class="task-button" data-task="move" role="tab" aria-selected="false"><span>02</span>Move</button>
+          <button class="task-button" data-task="replace" role="tab" aria-selected="false"><span>03</span>Replace</button>
+        </div>
+
+        <p class="editor-note">FOA audio has been binauralized for demonstration.<br />Headphones are recommended.</p>
+
+        <div class="case-list" id="case-list" aria-live="polite"></div>
+      </section>
+
+      <section class="vae-section page-panel" id="vae" data-page-panel="vae" aria-labelledby="vae-demo-title" hidden>
+        <div class="vae-heading">
+          <div>
+            <p class="kicker">NATIVE FOA · REPRESENTATION</p>
+            <h2 id="vae-demo-title">FOA VAE Reconstruction Demo</h2>
+          </div>
+        </div>
+        <div class="vae-list" id="vae-list"></div>
+      </section>
+
     </main>
-    <footer>NativeFOA · Local research preview</footer>
+
+    <footer>
+      <span>NativeFOA</span>
+      <span>Spatial audio editing in the native FOA domain</span>
+    </footer>
   </body>
 </html>

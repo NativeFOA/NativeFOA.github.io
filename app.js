@@ -1,147 +1,168 @@
-const TASKS = {
-  remove: {
-    order: ["erase_stage_b_0003", "erase_stage_b_0010", "erase_stage_b_0020", "erase_stage_b_0023", "erase_stage_b_0044"],
-    cases: [
-      { id: "erase_stage_b_0003", prompt: "Please take out the cough to the lower right?", target: "cough", targetAzimuth: -99.37, interferer: "cough", interfererAzimuth: 16.04 },
-      { id: "erase_stage_b_0010", prompt: "Can you cut the cat behind?", target: "cat", targetAzimuth: -165, interferer: "cat", interfererAzimuth: -89.76 },
-      { id: "erase_stage_b_0020", prompt: "Can you strip the laughter behind on the left?", target: "laughter", targetAzimuth: 141.36, interferer: "laughter", interfererAzimuth: -135.5 },
-      { id: "erase_stage_b_0023", prompt: "Erase the organ behind on the left.", target: "organ", targetAzimuth: 109.64, interferer: "organ", interfererAzimuth: 17.26 },
-      { id: "erase_stage_b_0044", prompt: "Remove the female speech on the right.", target: "female speech", targetAzimuth: -95.14, interferer: "male singer", interfererAzimuth: 12.32 },
-    ],
-  },
-  move: {
-    order: ["traj_eval_0020", "traj_eval_0011", "traj_eval_0024", "traj_eval_0077", "traj_eval_0005"],
-    cases: [
-      { id: "traj_eval_0005", prompt: "Sweep the crow starting at the 9 o'clock position and ending at the 12 o'clock position from the 2 to 7 second mark.", target: "crow", targetAzimuth: 94.75, interferer: "piano", interfererAzimuth: -143.42, movementStart: 2.3, movementEnd: 7.1, direction: "Clockwise", waypoints: [[0,94.75],[2.3,94.75],[7.1,-2.66],[10,-2.66]] },
-      { id: "traj_eval_0011", prompt: "Slide the female singer starting at the 3 o'clock position and ending at 9 o'clock starting at 4s.", target: "female singer", targetAzimuth: -90.91, interferer: "clean electric guitar", interfererAzimuth: -162.61, movementStart: 4.1, movementEnd: 10, direction: "Counterclockwise", waypoints: [[0,-90.91],[4.1,-90.91],[10,88.37]] },
-      { id: "traj_eval_0020", prompt: "Drift the cricket starting at 1 o'clock and ending at the 9 o'clock position gradually.", target: "cricket", targetAzimuth: -16.36, interferer: "male singer", interfererAzimuth: -113.17, movementStart: 0, movementEnd: 10, direction: "Counterclockwise", waypoints: [[0,-16.36],[10,102.06]] },
-      { id: "traj_eval_0024", prompt: "Travel the purr starting at the 9 o'clock position and ending at the 12 o'clock position.", target: "purr", targetAzimuth: 98.12, interferer: "piano", interfererAzimuth: -45.1, movementStart: 2.4, movementEnd: 6.6, direction: "Clockwise", waypoints: [[0,98.12],[2.4,98.12],[6.6,1.79],[10,1.79]] },
-      { id: "traj_eval_0077", prompt: "Move the race car from 10 o'clock to 3 o'clock from 2 to 5 seconds.", target: "race car", targetAzimuth: 46.17, interferer: "crow", interfererAzimuth: 122.22, movementStart: 2, movementEnd: 5, direction: "Clockwise", waypoints: [[0,46.17],[2,46.17],[5,-90.05],[10,-90.05]] },
-    ],
-  },
-  replace: {
-    order: ["replace_eval_0074", "replace_eval_0011", "replace_eval_0042", "replace_eval_0050", "replace_eval_0070"],
-    cases: [
-      { id: "replace_eval_0011", prompt: "Replace the singing with female singer at back-left, nearby.", target: "singing", replacement: "female singer", replacementAzimuth: 163.121, zone: "back", distance: 0.743, interferer: "baritone saxophone", interfererAzimuth: 25.904, interfererDistance: 0.9245 },
-      { id: "replace_eval_0042", prompt: "Replace the speech with saxophone at back-left, nearby.", target: "speech", replacement: "saxophone", replacementAzimuth: 161.795, zone: "back", distance: 0.7995, interferer: "electric bass", interfererAzimuth: -42.475, interfererDistance: 1.1753 },
-      { id: "replace_eval_0050", prompt: "Replace the wind chime with clock.", target: "wind chime", replacement: "clock", replacementAzimuth: 143.246, zone: "back-left", distance: 1.3719, interferer: "synthesizer", interfererAzimuth: 59.355, interfererDistance: 1.9291 },
-      { id: "replace_eval_0070", prompt: "Replace the crow with frog at front-right, at moderate distance.", target: "crow", replacement: "frog", replacementAzimuth: -42.037, zone: "front-right", distance: 2.8569, interferer: "wind chime", interfererAzimuth: 49.179, interfererDistance: 1.087 },
-      { id: "replace_eval_0074", prompt: "Replace the female speech and woman speaking with female singer at left, at moderate distance.", target: "female speech and woman speaking", replacement: "female singer", replacementAzimuth: 97.699, zone: "left", distance: 1.5405, interferer: "harp", interfererAzimuth: 25.357, interfererDistance: 2.025 },
-    ],
-  },
-};
+const cases={remove:[
+{id:"erase_stage_b_0003",prompt:"Please take out the cough to the lower right?",target:"cough",targetAzimuth:-99,interferer:"cough",interfererAzimuth:16},
+{id:"erase_stage_b_0010",prompt:"Can you cut the cat behind?",target:"cat",targetAzimuth:-165,interferer:"cat",interfererAzimuth:-90},
+{id:"erase_stage_b_0020",prompt:"Can you strip the laughter behind on the left?",target:"laughter",targetAzimuth:141,interferer:"laughter",interfererAzimuth:-136},
+{id:"erase_stage_b_0023",prompt:"Erase the organ behind on the left.",target:"organ",targetAzimuth:110,interferer:"organ",interfererAzimuth:17},
+{id:"erase_stage_b_0044",prompt:"Remove the female speech on the right.",target:"female speech",targetAzimuth:-95,interferer:"male singer",interfererAzimuth:12}],
+move:[
+{id:"traj_eval_0020",prompt:"Drift the cricket starting at 1 o'clock and ending at the 9 o'clock position gradually.",target:"cricket",start:-16,end:102,interferer:"male singer",interfererAzimuth:-113},
+{id:"traj_eval_0011",prompt:"Slide the female singer starting at the 3 o'clock position and ending at 9 o'clock starting at 4s.",target:"female singer",start:-91,end:88,interferer:"clean electric guitar",interfererAzimuth:-163},
+{id:"traj_eval_0024",prompt:"Travel the purr starting at the 9 o'clock position and ending at the 12 o'clock position.",target:"purr",start:98,end:2,interferer:"piano",interfererAzimuth:-45},
+{id:"traj_eval_0077",prompt:"Move the race car from 10 o'clock to 3 o'clock from 2 to 5 seconds.",target:"race car",start:46,end:-90,interferer:"crow",interfererAzimuth:122},
+{id:"traj_eval_0005",prompt:"Sweep the crow starting at the 9 o'clock position and ending at the 12 o'clock position from the 2 to 7 second mark.",target:"crow",start:95,end:-3,interferer:"piano",interfererAzimuth:-143}],
+replace:[
+{id:"replace_eval_0074",prompt:"Replace the female speech and woman speaking with female singer at left, at moderate distance.",target:"female singer",targetAzimuth:98,interferer:"harp",interfererAzimuth:25},
+{id:"replace_eval_0011",prompt:"Replace the singing with female singer at back-left, nearby.",target:"female singer",targetAzimuth:163,interferer:"baritone saxophone",interfererAzimuth:26},
+{id:"replace_eval_0042",prompt:"Replace the speech with saxophone at back-left, nearby.",target:"saxophone",targetAzimuth:162,interferer:"electric bass",interfererAzimuth:-42},
+{id:"replace_eval_0050",prompt:"Replace the wind chime with a clock.",target:"clock",targetAzimuth:143,interferer:"synthesizer",interfererAzimuth:59},
+{id:"replace_eval_0070",prompt:"Replace the crow with frog at front-right, at moderate distance.",target:"frog",targetAzimuth:-42,interferer:"wind chime",interfererAzimuth:49}]};
 
-const BASE_METHODS = [
-  { key: "input", label: "Input" }, { key: "nativefoa", label: "NativeFOA", note: "Ours" },
-  { key: "swanweave", label: "SwanWeave" }, { key: "mars-sep", label: "MARS-Sep" }, { key: "omnisep", label: "OmniSep" },
+const themes={remove:{task:"#e44d55",accent:"#c52f3a"},move:{task:"#3488d7",accent:"#1767ad"},replace:{task:"#32ad73",accent:"#168356"}};
+const interferer="#ed8a2c";let activeTask="remove";
+const audioRoot=location.pathname.includes('/preview/')?'../assets/audio':'assets/audio';
+const vaeRoot=location.pathname.includes('/preview/')?'vae-demo':'preview/vae-demo';
+const methodFiles={Reference:'gt',NativeFOA:'nativefoa',SwanWeave:'swanweave','MARS-Sep':'mars-sep',OmniSep:'omnisep'};
+function point(angle,radius=83){const r=angle*Math.PI/180;return{x:130-radius*Math.sin(r),y:130-radius*Math.cos(r)}}
+function dot(p,color,letter,hollow=false){return `<circle cx="${p.x}" cy="${p.y}" r="11" fill="${hollow?'#f4f8fb':color}" stroke="${color}" stroke-width="${hollow?2.7:0}" ${hollow?'stroke-dasharray="3 3"':''}/><text x="${p.x}" y="${p.y+3.3}" text-anchor="middle" class="dot-letter" fill="${hollow?color:'#fff'}">${letter}</text>`}
+function arc(start,end,radius=83){const a=point(start,radius),b=point(end,radius),large=Math.abs(end-start)>180?1:0,sweep=end>start?0:1;return `M${a.x} ${a.y}A${radius} ${radius} 0 ${large} ${sweep} ${b.x} ${b.y}`}
+function sceneSvg(item,index){const t=themes[activeTask],arrow=`arrow-${activeTask}-${index}`;let marks="";if(activeTask==="move"){const arrowStart=item.start+(item.end-item.start)*.45,arrowEnd=item.start+(item.end-item.start)*.54;marks=`<defs><marker id="${arrow}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="${t.task}"/></marker></defs><path d="${arc(item.start,item.end)}" fill="none" stroke="${t.task}" stroke-width="4" stroke-linecap="round"/><path d="${arc(arrowStart,arrowEnd)}" fill="none" stroke="transparent" stroke-width="4" marker-end="url(#${arrow})"/>${dot(point(item.start),t.task,"S")}${dot(point(item.end),t.task,"E",true)}${dot(point(item.interfererAzimuth),interferer,"I")}`}else{marks=`${dot(point(item.targetAzimuth),t.task,"T",activeTask==="remove")}${dot(point(item.interfererAzimuth),interferer,"I")}`}return `<svg viewBox="0 0 260 260" role="img" aria-label="Top-down spatial scene"><circle cx="130" cy="130" r="84" fill="none" stroke="#b7c6d1"/><circle cx="130" cy="130" r="56" fill="none" stroke="#d0dbe2" stroke-dasharray="3 6"/><circle cx="130" cy="130" r="29" fill="none" stroke="#d9e2e7" stroke-dasharray="3 7"/><path d="M130 45V215M45 130H215" stroke="#c8d5dd"/><text x="130" y="33" text-anchor="middle">FRONT</text><text x="130" y="235" text-anchor="middle">BACK</text><text x="30" y="134" text-anchor="middle">LEFT</text><text x="230" y="134" text-anchor="middle">RIGHT</text><circle cx="130" cy="130" r="9" fill="#14202d"/><path d="M130 116l-5 10h10z" fill="#14202d"/>${marks}</svg>`}
+function audioPlayer(label,item,file){const src=`${audioRoot}/${activeTask}/${item.id}/${file}.mp3`;return `<button class="fake-player" type="button" aria-label="Play ${label} audio"><audio preload="metadata" src="${src}"></audio><i class="play-icon">▶</i><i class="wave" aria-hidden="true"></i><b>00:00</b></button>`}
+function methodCard(label,item){const ours=label==="NativeFOA";return `<div class="method-card ${ours?'method-card--ours':''}"><div class="method-name"><span>${label}</span>${ours?'<small>OURS</small>':''}</div>${audioPlayer(label,item,methodFiles[label])}</div>`}
+function keyMarkup(item){const t=themes[activeTask];if(activeTask==="move")return `<div class="key-row" style="--dot:${t.task}"><b>S→E</b><span>Target: ${item.target} <em>(move)</em></span></div><div class="key-row" style="--dot:${interferer}"><b>I</b><span>Interferer: ${item.interferer} <em>(retain)</em></span></div>`;return `<div class="key-row" style="--dot:${t.task}"><b>T</b><span>Target: ${item.target} <em>(${activeTask})</em></span></div><div class="key-row" style="--dot:${interferer}"><b>I</b><span>Interferer: ${item.interferer} <em>(retain)</em></span></div>`}
+function caseCard(item,index){const methods=activeTask==="remove"?["Reference","NativeFOA","SwanWeave","MARS-Sep","OmniSep"]:["NativeFOA","SwanWeave","MARS-Sep","OmniSep"];return `<article class="case-card"><div class="case-copy"><h3>${item.prompt}</h3><div class="input-player"><div class="micro-label">Input</div>${audioPlayer('input',item,'input')}</div></div><div class="scene-panel"><div class="scene-wrap">${sceneSvg(item,index)}</div><div class="scene-key">${keyMarkup(item)}</div></div><div class="methods-panel"><div class="method-grid" style="--methods:${methods.length}">${methods.map(label=>methodCard(label,item)).join('')}</div></div></article>`}
+function render(){const t=themes[activeTask],list=document.querySelector('#case-list');document.documentElement.style.setProperty('--task',t.task);document.documentElement.style.setProperty('--accent',t.accent);list.dataset.task=activeTask;list.innerHTML=cases[activeTask].map(caseCard).join('')}
+
+function initSoundfieldLegacy(){
+  const canvas=document.querySelector('#soundfield-canvas'),ctx=canvas.getContext('2d');let w=0,h=0,dpr=1,pointerX=0,pointerY=0;
+  const colors=['#2d8fcb','#e47a25','#35b977','#e74b55','#7b65cf','#29bfd0'];
+  const particles=Array.from({length:180},(_,i)=>{const u=(i+.5)/180,v=((i*73)%180+.5)/180,theta=Math.acos(1-2*u),phi=Math.PI*2*v,r=.72+((i*37)%29)/100;return{x:r*Math.sin(theta)*Math.cos(phi),y:r*Math.cos(theta),z:r*Math.sin(theta)*Math.sin(phi),c:colors[i%colors.length],s:1+(i%4)*.45}});
+  const sources=[{lat:.25,lon:.2,c:'#e74b55'},{lat:-.36,lon:1.8,c:'#2d8fcb'},{lat:.52,lon:3.5,c:'#35b977'},{lat:-.12,lon:5.1,c:'#e47a25'}];
+  function resize(){const r=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+  function rotate(p,yaw,pitch){const cy=Math.cos(yaw),sy=Math.sin(yaw),cx=Math.cos(pitch),sx=Math.sin(pitch),x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy;return{x,y:p.y*cx-z*sx,z:p.y*sx+z*cx}}
+  function project(p,cx,cy,R){const f=1/(1+p.z*.28);return{x:cx+p.x*R*f,y:cy-p.y*R*f,z:p.z,f}}
+  function path(points,cx,cy,R,yaw,pitch,color,width=1,alpha=.25){ctx.beginPath();points.forEach((p,i)=>{const q=project(rotate(p,yaw,pitch),cx,cy,R);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.strokeStyle=color;ctx.globalAlpha=alpha;ctx.lineWidth=width;ctx.stroke();ctx.globalAlpha=1}
+  function sphereGrid(cx,cy,R,yaw,pitch){
+    for(let lat=-60;lat<=60;lat+=20){const a=lat*Math.PI/180,pts=[];for(let i=0;i<=80;i++){const l=i/80*Math.PI*2;pts.push({x:Math.cos(a)*Math.cos(l),y:Math.sin(a),z:Math.cos(a)*Math.sin(l)})}path(pts,cx,cy,R,yaw,pitch,'#cdeaf1',1,.31)}
+    for(let lon=0;lon<360;lon+=20){const l=lon*Math.PI/180,pts=[];for(let i=0;i<=60;i++){const a=-Math.PI/2+i/60*Math.PI;pts.push({x:Math.cos(a)*Math.cos(l),y:Math.sin(a),z:Math.cos(a)*Math.sin(l)})}path(pts,cx,cy,R,yaw,pitch,'#b9e0e8',1,.25)}
+    const axes=[{v:{x:1.25,y:0,z:0},n:'X',c:'#35b977'},{v:{x:0,y:1.25,z:0},n:'Z',c:'#e47a25'},{v:{x:0,y:0,z:1.25},n:'Y',c:'#2d8fcb'}];
+    axes.forEach(a=>{const o=project(rotate({x:0,y:0,z:0},yaw,pitch),cx,cy,R),q=project(rotate(a.v,yaw,pitch),cx,cy,R);ctx.beginPath();ctx.moveTo(o.x,o.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=a.c;ctx.globalAlpha=.72;ctx.lineWidth=2;ctx.stroke();ctx.globalAlpha=1;ctx.fillStyle=a.c;ctx.font='700 12px ui-monospace, monospace';ctx.fillText(a.n,q.x+6,q.y-4)});
+  }
+  function glow(x,y,r,color,alpha=1){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(.28,color);g.addColorStop(1,'rgba(255,255,255,0)');ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+  function draw(time){
+    ctx.clearRect(0,0,w,h);const cx=w*.5,cy=h*.48,R=Math.min(w,h)*.47,yaw=time*.00011+pointerX*.22,pitch=-.18+Math.sin(time*.00023)*.055+pointerY*.12;
+    const ambient=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.3);ambient.addColorStop(0,'rgba(213,246,250,.42)');ambient.addColorStop(.48,'rgba(45,143,203,.13)');ambient.addColorStop(1,'rgba(4,16,29,0)');ctx.fillStyle=ambient;ctx.fillRect(0,0,w,h);
+    sphereGrid(cx,cy,R,yaw,pitch);
+    const wPulse=R*(.15+Math.sin(time*.0012)*.018);glow(cx,cy,wPulse,'rgba(235,246,250,.55)',.6);ctx.fillStyle='rgba(255,255,255,.78)';ctx.font='700 12px ui-monospace, monospace';ctx.fillText('W',cx+8,cy-8);
+    particles.map(p=>{const q=project(rotate(p,yaw,pitch),cx,cy,R);return{...q,c:p.c,s:p.s}}).sort((a,b)=>b.z-a.z).forEach(p=>{ctx.globalAlpha=.22+(1-p.z)*.22;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s*p.f,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
+    sources.forEach((s,i)=>{const lon=s.lon+time*(.00008+i*.000012),p={x:Math.cos(s.lat)*Math.cos(lon),y:Math.sin(s.lat),z:Math.cos(s.lat)*Math.sin(lon)},q=project(rotate(p,yaw,pitch),cx,cy,R);glow(q.x,q.y,22*q.f,s.c,.95);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(q.x,q.y,4.2*q.f,0,Math.PI*2);ctx.fill();for(let k=1;k<=2;k++){const phase=(time*.00012+i*.21+k*.31)%1;ctx.strokeStyle=s.c;ctx.globalAlpha=(1-phase)*.38;ctx.lineWidth=1;ctx.beginPath();ctx.arc(q.x,q.y,(9+phase*30)*q.f,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1}});
+    const trail=[];for(let i=0;i<=70;i++){const u=i/70,lon=.2+u*2.35,lat=.42*Math.sin(u*Math.PI)-.1;trail.push({x:Math.cos(lat)*Math.cos(lon),y:Math.sin(lat),z:Math.cos(lat)*Math.sin(lon)})}path(trail,cx,cy,R*1.02,yaw,pitch,'#ffd05a',3,.78);
+    ctx.fillStyle='rgba(255,255,255,.72)';ctx.font='650 11px ui-monospace, monospace';ctx.fillText('W ± Y / Z / X',Math.max(22,cx-R*.92),Math.min(h-30,cy+R*.9));
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(draw)
+  }
+  canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();pointerX=(e.clientX-r.left)/r.width-.5;pointerY=(e.clientY-r.top)/r.height-.5});
+  addEventListener('resize',resize);resize();requestAnimationFrame(draw)
+}
+
+function initSoundfield(){
+  const canvas=document.querySelector('#soundfield-canvas'),ctx=canvas.getContext('2d');let w=0,h=0,dpr=1;
+  const palette={blue:'#327fc1',orange:'#e67e22',green:'#2f9e66',red:'#c94246',violet:'#7d67b4',ink:'#53666d'};
+  const motes=Array.from({length:84},(_,i)=>({u:((i*47)%89)/89,v:((i*31)%83)/83,d:.25+((i*17)%67)/100,c:[palette.blue,palette.orange,palette.green,palette.violet][i%4]}));
+  function resize(){const r=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+  function rot(p,yaw,pitch){const cy=Math.cos(yaw),sy=Math.sin(yaw),cx=Math.cos(pitch),sx=Math.sin(pitch),x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy;return{x,y:p.y*cx-z*sx,z:p.y*sx+z*cx}}
+  function proj(p,cx,cy,R){const f=1/(1+p.z*.24);return{x:cx+p.x*R*f,y:cy-p.y*R*f,z:p.z,f}}
+  function line(points,cx,cy,R,yaw,pitch,color,alpha=.28,width=1){ctx.beginPath();points.forEach((p,i)=>{const q=proj(rot(p,yaw,pitch),cx,cy,R);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.strokeStyle=color;ctx.globalAlpha=alpha;ctx.lineWidth=width;ctx.stroke();ctx.globalAlpha=1}
+  function glow(x,y,r,color,alpha=.8){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(.26,color);g.addColorStop(1,'rgba(255,255,255,0)');ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+  function source(p,cx,cy,R,yaw,pitch,color,time,fade=1,pulse=true){const q=proj(rot(p,yaw,pitch),cx,cy,R);glow(q.x,q.y,20*q.f,color,.7*fade);ctx.fillStyle=color;ctx.globalAlpha=fade;ctx.beginPath();ctx.arc(q.x,q.y,5*q.f,0,Math.PI*2);ctx.fill();if(pulse){for(let i=1;i<=2;i++){const phase=(time*.00016+i*.37)%1;ctx.strokeStyle=color;ctx.globalAlpha=(1-phase)*.42*fade;ctx.beginPath();ctx.arc(q.x,q.y,(8+phase*25)*q.f,0,Math.PI*2);ctx.stroke()}}ctx.globalAlpha=1;return q}
+  function trajectory(points,cx,cy,R,yaw,pitch,color){line(points,cx,cy,R,yaw,pitch,color,.82,2.5);const mid=Math.floor(points.length*.52),a=proj(rot(points[mid-1],yaw,pitch),cx,cy,R),b=proj(rot(points[mid+1],yaw,pitch),cx,cy,R),angle=Math.atan2(b.y-a.y,b.x-a.x);ctx.save();ctx.translate(b.x,b.y);ctx.rotate(angle);ctx.fillStyle=color;ctx.globalAlpha=.88;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-9,-4);ctx.lineTo(-9,4);ctx.closePath();ctx.fill();ctx.restore();ctx.globalAlpha=1}
+  function sphere(cx,cy,R,yaw,pitch,label,mode,time){
+    for(let lat=-60;lat<=60;lat+=30){const a=lat*Math.PI/180,pts=[];for(let i=0;i<=48;i++){const l=i/48*Math.PI*2;pts.push({x:Math.cos(a)*Math.cos(l),y:Math.sin(a),z:Math.cos(a)*Math.sin(l)})}line(pts,cx,cy,R,yaw,pitch,palette.ink,.4)}
+    for(let lon=0;lon<360;lon+=60){const l=lon*Math.PI/180,pts=[];for(let i=0;i<=40;i++){const a=-Math.PI/2+i/40*Math.PI;pts.push({x:Math.cos(a)*Math.cos(l),y:Math.sin(a),z:Math.cos(a)*Math.sin(l)})}line(pts,cx,cy,R,yaw,pitch,palette.ink,.32)}
+    const axis=[{p:{x:1.15,y:0,z:0},c:palette.green,n:'X'},{p:{x:0,y:1.15,z:0},c:palette.orange,n:'Z'},{p:{x:0,y:0,z:1.15},c:palette.blue,n:'Y'}];axis.forEach(a=>{const o=proj(rot({x:0,y:0,z:0},yaw,pitch),cx,cy,R),q=proj(rot(a.p,yaw,pitch),cx,cy,R);ctx.beginPath();ctx.moveTo(o.x,o.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=a.c;ctx.globalAlpha=.62;ctx.stroke();ctx.globalAlpha=1;ctx.fillStyle=a.c;ctx.font='700 10px ui-monospace,monospace';ctx.fillText(a.n,q.x+4,q.y-3)});
+    if(label){ctx.fillStyle='#354a52';ctx.font='800 11px ui-monospace,monospace';ctx.letterSpacing='1px';ctx.fillText(label,cx-R*.72,cy-R-13)}
+    if(mode==='original'){[[.2,.15,palette.red],[-.35,1.8,palette.blue],[.42,3.45,palette.green],[-.12,5.2,palette.orange]].forEach((s,i)=>source({x:Math.cos(s[0])*Math.cos(s[1]+time*.00005),y:Math.sin(s[0]),z:Math.cos(s[0])*Math.sin(s[1]+time*.00005)},cx,cy,R,yaw,pitch,s[2],time))}
+    if(mode==='moveA'){const start={x:-.82,y:-.38,z:.22},end={x:.82,y:.34,z:.12},trail=[];for(let i=0;i<=40;i++){const u=i/40;trail.push({x:start.x+(end.x-start.x)*u,y:start.y+(end.y-start.y)*u,z:start.z+(end.z-start.z)*u})}trajectory(trail,cx,cy,R,yaw,pitch,palette.blue);const u=(time*.000075)%1;source({x:start.x+(end.x-start.x)*u,y:start.y+(end.y-start.y)*u,z:start.z+(end.z-start.z)*u},cx,cy,R,yaw,pitch,palette.blue,time);source({x:-.48,y:.62,z:.48},cx,cy,R,yaw,pitch,palette.orange,time,1,false);source({x:.22,y:-.66,z:-.56},cx,cy,R,yaw,pitch,palette.green,time,1,false)}
+    if(mode==='movePlane'){const start=-2.55,end=.35,trail=[];for(let i=0;i<=48;i++){const a=start+(end-start)*(i/48);trail.push({x:Math.cos(a)*.82,y:.05,z:Math.sin(a)*.82})}trajectory(trail,cx,cy,R,yaw,pitch,palette.violet);const a=start+(end-start)*((time*.000065)%1);source({x:Math.cos(a)*.82,y:.05,z:Math.sin(a)*.82},cx,cy,R,yaw,pitch,palette.violet,time);source({x:-.2,y:.62,z:.62},cx,cy,R,yaw,pitch,palette.orange,time,1,false)}
+    if(mode==='moveB'){const start={x:.72,y:-.58,z:-.18},end={x:-.68,y:.58,z:.2},trail=[];for(let i=0;i<=40;i++){const u=i/40;trail.push({x:start.x+(end.x-start.x)*u,y:start.y+(end.y-start.y)*u,z:start.z+(end.z-start.z)*u})}trajectory(trail,cx,cy,R,yaw,pitch,palette.red);const u=(time*.00006)%1;source({x:start.x+(end.x-start.x)*u,y:start.y+(end.y-start.y)*u,z:start.z+(end.z-start.z)*u},cx,cy,R,yaw,pitch,palette.red,time);source({x:.66,y:.42,z:.48},cx,cy,R,yaw,pitch,palette.violet,time,1,false);source({x:.38,y:-.48,z:-.7},cx,cy,R,yaw,pitch,palette.orange,time,1,false)}
+    if(mode==='remove'){const fade=.04+(Math.sin(time*.00135)+1)*.48;source({x:.7,y:.22,z:.68},cx,cy,R,yaw,pitch,palette.red,time,fade);source({x:-.5,y:-.2,z:.83},cx,cy,R,yaw,pitch,palette.green,time,1,false)}
+    if(mode==='replace'){const p={x:.7,y:.22,z:.68},mix=(Math.sin(time*.0011)+1)/2;source(p,cx,cy,R,yaw,pitch,palette.orange,time,1-mix*.94,false);source(p,cx,cy,R,yaw,pitch,palette.green,time,.06+mix*.94,true);source({x:-.5,y:-.2,z:.83},cx,cy,R,yaw,pitch,palette.blue,time,1,false)}
+  }
+  function channelBands(){const labels=['W','Y','Z','X'],colors=['#687b81',palette.blue,palette.orange,palette.green],left=Math.max(28,w*.038),right=Math.min(w-24,w*.965),base=h*.86;labels.forEach((label,row)=>{const y=base+row*11;ctx.beginPath();for(let i=0;i<=80;i++){const u=i/80,x=left+(right-left)*u,amp=2.2+row*.55,yy=y+Math.sin(u*Math.PI*(10+row*2)+row*.8)*amp+Math.sin(u*Math.PI*27)*.65;i?ctx.lineTo(x,yy):ctx.moveTo(x,yy)}ctx.strokeStyle=colors[row];ctx.globalAlpha=.2;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=.76;ctx.fillStyle=colors[row];ctx.font='800 11px ui-monospace,monospace';ctx.fillText(label,left-20,y+4)});ctx.globalAlpha=1}
+  function field(){ctx.save();const paths=[[.06,.7,.28,.18,.72,.82,.96,.34,palette.blue],[.03,.43,.28,.83,.73,.12,.98,.57,palette.violet],[.11,.2,.38,.65,.64,.35,.91,.8,palette.green]];paths.forEach((p,i)=>{const g=ctx.createLinearGradient(w*p[0],0,w*p[6],0);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.25,p[8]);g.addColorStop(.75,p[8]);g.addColorStop(1,'rgba(255,255,255,0)');ctx.strokeStyle=g;ctx.globalAlpha=.14;ctx.lineWidth=1.2;ctx.setLineDash([3+i*2,8+i*2]);ctx.beginPath();ctx.moveTo(w*p[0],h*p[1]);ctx.bezierCurveTo(w*p[2],h*p[3],w*p[4],h*p[5],w*p[6],h*p[7]);ctx.stroke()});ctx.setLineDash([]);motes.forEach((m,i)=>{const x=w*m.u,y=h*m.v,r=.7+m.d*1.8;ctx.globalAlpha=.1+m.d*.2;ctx.fillStyle=m.c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();if(i%9===0){ctx.strokeStyle=m.c;ctx.globalAlpha=.08;ctx.beginPath();ctx.moveTo(x-r*7,y);ctx.lineTo(x+r*7,y);ctx.stroke()}});channelBands();ctx.restore()}
+  function taskLabel(x,y,R,label){ctx.fillStyle='rgba(64,75,78,.66)';ctx.font='700 9px ui-monospace,monospace';ctx.textAlign='center';ctx.letterSpacing='1px';ctx.fillText(label.toUpperCase(),x,y+R+17);ctx.textAlign='start'}
+  function draw(time){ctx.clearRect(0,0,w,h);field();const R=Math.min(w,h)*.125;const nodes=[[w*.13,h*.245,.38,-.12,'moveA','Source Movement'],[w*.145,h*.675,-.48,-.08,'movePlane','Source Movement'],[w*.87,h*.245,-.32,-.08,'remove','Source Removal'],[w*.855,h*.675,.48,-.1,'replace','Source Replacement']];nodes.forEach(([x,y,yaw,pitch,mode,label])=>{sphere(x,y,R,yaw,pitch,'',mode,time);taskLabel(x,y,R,label)});if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(draw)}
+  addEventListener('resize',resize);resize();requestAnimationFrame(draw)
+}
+
+const vaeSamples=[
+  {id:'530swnPWJrQ_17'},
+  {id:'RbFEpkuFCjI_18'},
+  {id:'nagycDdW04w_10.0'},
+  {id:'530swnPWJrQ_5'},
+  {id:'p5Ady9RJyhU_90'},
 ];
-const outputMethodsFor = (task) => task === "remove"
-  ? [{ key: "gt", label: "Reference" }, ...BASE_METHODS.slice(1)]
-  : BASE_METHODS.slice(1);
-const SVG_NS = "http://www.w3.org/2000/svg";
-const COLORS = { grid: "#d8e1ea", path: "#2f6fec", target: "#16a085", remove: "#d9473f", retain: "#168a63", interferer: "#d9822b", listener: "#0b1828", muted: "#607084" };
-let activeAudio = null;
-const plotState = new Map();
-
-function formatDegree(value) { const rounded = Math.round(value * 10) / 10; return `${rounded > 0 ? "+" : ""}${rounded}°`; }
-function pointAt(azimuth, radius = 67) { const rad = azimuth * Math.PI / 180; return { x: 100 - radius * Math.sin(rad), y: 100 - radius * Math.cos(rad) }; }
-function angleAt(item, time) {
-  if (!item.waypoints) return item.targetAzimuth;
-  const points = item.waypoints;
-  if (time <= points[0][0]) return points[0][1];
-  for (let i = 1; i < points.length; i += 1) {
-    const [nextTime, nextAngle] = points[i]; const [prevTime, prevAngle] = points[i - 1];
-    if (time <= nextTime) { const progress = (time - prevTime) / Math.max(nextTime - prevTime, .001); return prevAngle + (nextAngle - prevAngle) * progress; }
-  }
-  return points.at(-1)[1];
+let vaeListReady=false;
+function sizeVaeFrame(frame){
+  try{
+    const doc=frame.contentDocument;
+    const resize=()=>{frame.style.height=`${Math.max(520,Math.ceil(doc.documentElement.scrollHeight))}px`};
+    frame.vaeResizeObserver?.disconnect();
+    frame.vaeResizeObserver=new ResizeObserver(resize);
+    frame.vaeResizeObserver.observe(doc.body);
+    resize();
+  }catch(error){console.warn('VAE demo frame sizing is unavailable.',error)}
 }
-function svgEl(name, attrs = {}) { const node = document.createElementNS(SVG_NS, name); Object.entries(attrs).forEach(([key,value]) => node.setAttribute(key,value)); return node; }
-function svgText(svg,text,x,y,attrs={}) { const node = svgEl("text",{x,y,...attrs}); node.textContent = text; svg.appendChild(node); }
-
-function sourceLabel(svg,text,point,color,dy) {
-  const anchor=point.x>145?"end":point.x<55?"start":"middle";
-  const x=point.x+(anchor==="end"?-8:anchor==="start"?8:0);
-  svgText(svg,text,x,point.y+dy,{fill:color,"font-size":10,"font-family":"Inter, sans-serif","font-weight":800,"text-anchor":anchor,stroke:"white","stroke-width":4,"paint-order":"stroke","stroke-linejoin":"round"});
+function mountVaeFrame(frame){
+  if(frame.dataset.mounted==='true')return;
+  frame.dataset.mounted='true';
+  frame.addEventListener('load',()=>sizeVaeFrame(frame),{once:true});
+  frame.src=frame.dataset.src;
 }
-
-function removalLabel(svg,name,action,point,color) {
-  const anchor=point.x>145?"end":point.x<55?"start":"middle";
-  const x=point.x+(anchor==="end"?-9:anchor==="start"?9:0);
-  const placeBelow=point.y<70||Math.abs(point.y-100)<25;
-  const y=point.y+(placeBelow?19:-17);
-  const text=svgEl("text",{x,y,fill:color,"font-family":"Inter, sans-serif","font-size":12.5,"font-weight":850,"text-anchor":anchor,stroke:"white","stroke-width":4.5,"paint-order":"stroke","stroke-linejoin":"round"});
-  const nameLine=svgEl("tspan",{x,dy:0}); nameLine.textContent=name;
-  const actionLine=svgEl("tspan",{x,dy:13,"font-size":10.5,"font-weight":800}); actionLine.textContent=`(${action})`;
-  text.append(nameLine,actionLine); svg.appendChild(text);
+function unmountVaeFrame(frame){
+  if(frame.dataset.mounted!=='true')return;
+  frame.dataset.mounted='false';
+  frame.vaeResizeObserver?.disconnect();
+  frame.vaeResizeObserver=null;
+  frame.src='about:blank';
 }
-
-function twoLineLabel(svg,first,second,point,color,{dy=18,fontSize=10.5}={}) {
-  const anchor=point.x>140?"end":point.x<60?"start":"middle";
-  const x=point.x+(anchor==="end"?-9:anchor==="start"?9:0);
-  const text=svgEl("text",{x,y:point.y+dy,fill:color,"font-family":"Inter, sans-serif","font-size":fontSize,"font-weight":850,"text-anchor":anchor,stroke:"white","stroke-width":4,"paint-order":"stroke","stroke-linejoin":"round"});
-  const firstLine=svgEl("tspan",{x,dy:0}); firstLine.textContent=first;
-  const secondLine=svgEl("tspan",{x,dy:12,"font-size":fontSize-1,"font-weight":800}); secondLine.textContent=second;
-  text.append(firstLine,secondLine); svg.appendChild(text);
+function initVaeList(){
+  if(vaeListReady)return;
+  vaeListReady=true;
+  const list=document.querySelector('#vae-list');
+  vaeSamples.forEach(sample=>{
+    const item=document.createElement('article');
+    item.className='vae-case';
+    item.innerHTML=`<iframe class="vae-frame" data-src="${vaeRoot}/index.html#sample=${encodeURIComponent(sample.id)}" title="FOA VAE reconstruction example" loading="lazy" allow="autoplay; fullscreen"></iframe>`;
+    list.append(item);
+  });
+  const frames=[...list.querySelectorAll('.vae-frame')];
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+    const frame=entry.target;
+    entry.isIntersecting?mountVaeFrame(frame):unmountVaeFrame(frame);
+  }),{rootMargin:'500px 0px'});
+  frames.forEach(frame=>observer.observe(frame));
 }
-
-function addArrowMarker(svg,id,color) {
-  const defs=svgEl("defs");
-  const marker=svgEl("marker",{id,viewBox:"0 0 10 10",refX:8,refY:5,markerWidth:4.5,markerHeight:4.5,orient:"auto-start-reverse"});
-  marker.appendChild(svgEl("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:color}));
-  defs.appendChild(marker); svg.appendChild(defs);
+function showPage(page,{scroll=false}={}){
+  const next=['vae','editor'].includes(page)?page:'editor';
+  document.querySelectorAll('[data-page-panel]').forEach(panel=>{panel.hidden=panel.dataset.pagePanel!==next});
+  document.querySelectorAll('.module-button').forEach(button=>button.classList.toggle('is-active',button.dataset.page===next));
+  if(next==='vae')initVaeList();
+  history.replaceState(null,'',`#${next}`);
+  if(scroll)document.querySelector('.module-switcher')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function markerLetter(svg,point,letter,color="white") {
-  svgText(svg,letter,point.x,point.y+3.6,{fill:color,"font-size":10,"font-family":"Inter, sans-serif","font-weight":900,"text-anchor":"middle","pointer-events":"none"});
-}
-
-function drawScene(svg,item,task) {
-  svg.setAttribute("viewBox","0 0 200 200");
-  [27,47,67].forEach((r) => svg.appendChild(svgEl("circle",{cx:100,cy:100,r,fill:"none",stroke:COLORS.grid,"stroke-width":r===67?1.2:.8,"stroke-dasharray":r===67?"none":"3 4"})));
-  [[100,28,100,172],[28,100,172,100]].forEach(([x1,y1,x2,y2]) => svg.appendChild(svgEl("line",{x1,y1,x2,y2,stroke:COLORS.grid,"stroke-width":.8})));
-  const label={fill:COLORS.muted,"font-size":10.5,"font-family":"Inter, sans-serif","font-weight":750,"text-anchor":"middle"};
-  svgText(svg,"FRONT",100,18,label); svgText(svg,"LEFT",17,103,{...label,"text-anchor":"start"}); svgText(svg,"RIGHT",183,103,{...label,"text-anchor":"end"}); svgText(svg,"BACK",100,188,label);
-  svg.appendChild(svgEl("circle",{cx:100,cy:100,r:9,fill:COLORS.listener})); svg.appendChild(svgEl("path",{d:"M100 86 L95 95 L105 95 Z",fill:COLORS.listener}));
-  let primaryAzimuth=item.targetAzimuth;
-  if(task==="move") {
-    const markerId=`move-arrow-${item.id}`; addArrowMarker(svg,markerId,COLORS.path);
-    const startAngle=item.waypoints[0][1]; const endAngle=item.waypoints.at(-1)[1]; const pathPoints=[];
-    for(let step=0;step<=36;step+=1){const angle=startAngle+(endAngle-startAngle)*(step/36);const p=pointAt(angle);pathPoints.push(`${p.x},${p.y}`);}
-    svg.appendChild(svgEl("polyline",{points:pathPoints.join(" "),fill:"none",stroke:COLORS.path,"stroke-width":4,"stroke-linecap":"round","stroke-linejoin":"round",opacity:.82}));
-    const arrowStart=pointAt(startAngle+(endAngle-startAngle)*.43); const arrowEnd=pointAt(startAngle+(endAngle-startAngle)*.55);
-    svg.appendChild(svgEl("line",{x1:arrowStart.x,y1:arrowStart.y,x2:arrowEnd.x,y2:arrowEnd.y,stroke:COLORS.path,"stroke-width":3,"stroke-linecap":"round","marker-end":`url(#${markerId})`}));
-    const start=pointAt(startAngle); const end=pointAt(endAngle);
-    svg.appendChild(svgEl("circle",{cx:end.x,cy:end.y,r:7,fill:"white",stroke:COLORS.path,"stroke-width":3}));
-    markerLetter(svg,end,"E",COLORS.path);
-  }
-  if(task==="replace") primaryAzimuth=item.replacementAzimuth;
-  const targetPoint=pointAt(primaryAzimuth);
-  const targetDot=task==="remove"
-    ? svgEl("circle",{cx:targetPoint.x,cy:targetPoint.y,r:9,fill:"white",stroke:COLORS.remove,"stroke-width":3.2,"stroke-dasharray":"4 2"})
-    : svgEl("circle",{cx:targetPoint.x,cy:targetPoint.y,r:7,fill:task==="move"?COLORS.path:COLORS.target,stroke:"white","stroke-width":2.5});
-  svg.appendChild(targetDot);
-  if(task==="remove") markerLetter(svg,targetPoint,"T",COLORS.remove);
-  else if(task==="move") markerLetter(svg,targetPoint,"S");
-  else if(task==="replace") markerLetter(svg,targetPoint,"T");
-  if(item.interfererAzimuth!==undefined){
-    const p=pointAt(item.interfererAzimuth,51);
-    svg.appendChild(svgEl("circle",{cx:p.x,cy:p.y,r:task==="remove"?8:6,fill:task==="remove"?COLORS.retain:COLORS.interferer,stroke:"white","stroke-width":2.5}));
-    markerLetter(svg,p,"I");
-  }
-  return targetDot;
+function initPageSwitcher(){
+  document.querySelectorAll('.module-button').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.page,{scroll:true})));
+  addEventListener('hashchange',()=>{
+    if(location.hash==='#top'){
+      document.querySelector('#top')?.scrollIntoView({behavior:'smooth',block:'start'});
+      return;
+    }
+    showPage(location.hash.slice(1),{scroll:true});
+  });
+  showPage(location.hash.slice(1));
 }
 
-function sceneLabels(item,task) {
-  if(task==="remove") return `<div class="scene-labels"><span class="scene-label scene-label--remove"><b>T</b><span>Target: ${item.target} <em>(remove)</em></span></span><span class="scene-label scene-label--retain"><b>I</b><span>Interferer: ${item.interferer} <em>(retain)</em></span></span></div>`;
-  if(task==="move") return `<div class="scene-labels"><span class="scene-label scene-label--move"><b>S→E</b><span>Target: ${item.target}</span></span><span class="scene-label scene-label--interferer"><b>I</b><span>Interferer: ${item.interferer}</span></span></div>`;
-  return `<div class="scene-labels"><span class="scene-label scene-label--target"><b>T</b><span>Target: ${item.replacement}</span></span><span class="scene-label scene-label--interferer"><b>I</b><span>Interferer: ${item.interferer}</span></span></div>`;
-}
-
-function audioCell(item,task,method){return `<div class="audio-cell ${method.key==="nativefoa"?"audio-cell--ours":""}"><div class="audio-cell__label"><span>${method.label}</span>${method.note?`<em>${method.note}</em>`:""}</div><audio controls preload="metadata" data-task="${task}" data-case="${item.id}" data-method="${method.key}" src="assets/audio/${task}/${item.id}/${method.key}.mp3" aria-label="${item.id} ${method.label}"></audio></div>`;}
-function caseMarkup(item,task){const methods=outputMethodsFor(task);return `<article class="case" data-case-card="${item.id}"><div class="case__left"><h3>${item.prompt}</h3>${audioCell(item,task,BASE_METHODS[0])}</div><div class="case__right"><div class="scene"><div class="plot"><svg data-plot="${item.id}" role="img" aria-label="Top-down spatial scene"></svg></div>${sceneLabels(item,task)}</div><div class="outputs" style="--method-count:${methods.length}">${methods.map((method)=>audioCell(item,task,method)).join("")}</div></div></article>`;}
-function orderedCases(task){const data=TASKS[task];return data.order.map((id)=>data.cases.find((item)=>item.id===id));}
-function updatePlot(audio){const state=plotState.get(audio.dataset.case);if(!state||state.task!=="move")return;const time=Number.isFinite(audio.currentTime)?audio.currentTime:0;const isInput=audio.dataset.method==="input";const angle=isInput?state.item.targetAzimuth:angleAt(state.item,time);const p=pointAt(angle);state.dot.setAttribute("cx",p.x);state.dot.setAttribute("cy",p.y);}
-function bindAudio(){document.querySelectorAll("audio").forEach((audio)=>{const update=()=>updatePlot(audio);audio.addEventListener("play",()=>{if(activeAudio&&activeAudio!==audio)activeAudio.pause();activeAudio=audio;update();});audio.addEventListener("timeupdate",update);audio.addEventListener("seeked",update);audio.addEventListener("ended",update);});}
-function renderTask(task){if(activeAudio){activeAudio.pause();activeAudio=null;}document.querySelectorAll("[data-task-tab]").forEach((button)=>{const selected=button.dataset.taskTab===task;button.classList.toggle("is-active",selected);button.setAttribute("aria-selected",String(selected));});const items=orderedCases(task);document.querySelector("#cases").innerHTML=items.map((item)=>caseMarkup(item,task)).join("");plotState.clear();items.forEach((item)=>{const card=document.querySelector(`[data-case-card="${item.id}"]`);const dot=drawScene(card.querySelector("svg"),item,task);plotState.set(item.id,{item,task,dot});});bindAudio();}
-document.querySelectorAll("[data-task-tab]").forEach((button)=>button.addEventListener("click",()=>renderTask(button.dataset.taskTab)));
-renderTask("remove");
+document.querySelectorAll('.task-button').forEach(button=>button.addEventListener('click',()=>{activeTask=button.dataset.task;document.querySelectorAll('.task-button').forEach(node=>{const on=node===button;node.classList.toggle('is-active',on);node.setAttribute('aria-selected',String(on))});render()}));
+document.addEventListener('click',event=>{const button=event.target.closest('.fake-player');if(!button)return;const audio=button.querySelector('audio');document.querySelectorAll('.fake-player').forEach(node=>{if(node!==button){node.querySelector('audio')?.pause();node.classList.remove('is-playing');const icon=node.querySelector('.play-icon');if(icon)icon.textContent='▶'}});if(audio.paused){audio.play();button.classList.add('is-playing');button.querySelector('.play-icon').textContent='Ⅱ'}else{audio.pause();button.classList.remove('is-playing');button.querySelector('.play-icon').textContent='▶'}});
+document.addEventListener('loadedmetadata',event=>{if(event.target.tagName!=='AUDIO')return;const time=event.target.closest('.fake-player')?.querySelector('b');if(time&&Number.isFinite(event.target.duration)){const m=Math.floor(event.target.duration/60),s=Math.floor(event.target.duration%60);time.textContent=`${m}:${String(s).padStart(2,'0')}`}},true);
+document.addEventListener('ended',event=>{if(event.target.tagName!=='AUDIO')return;const button=event.target.closest('.fake-player');button?.classList.remove('is-playing');const icon=button?.querySelector('.play-icon');if(icon)icon.textContent='▶'},true);
+render();initSoundfield();initPageSwitcher();
