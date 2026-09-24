@@ -1,20 +1,16 @@
 export const METHODS = Object.freeze([
   Object.freeze({ id: 'gt', label: 'Ground Truth', shortLabel: 'GT' }),
-  Object.freeze({ id: 'omniaudio', label: 'OmniAudio', shortLabel: 'Omni' }),
-  Object.freeze({
-    id: 'sao2',
-    label: 'Stable Audio Open 2',
-    shortLabel: 'SAO2',
-  }),
-  Object.freeze({
-    id: 'sao-wy-zx',
-    label: 'SAO WY-ZX',
-    shortLabel: 'WY-ZX',
-  }),
   Object.freeze({
     id: 'proposed-79515',
-    label: 'Proposed (step 1M)',
-    shortLabel: 'Proposed',
+    label: 'NativeFOA-VAE',
+    shortLabel: 'NativeFOA',
+    ours: true,
+  }),
+  Object.freeze({ id: 'omniaudio', label: 'OmniAudio', shortLabel: 'Omni' }),
+  Object.freeze({
+    id: 'sao-wy-zx',
+    label: 'SAO',
+    shortLabel: 'SAO',
   }),
 ]);
 

@@ -120,6 +120,7 @@ export class SpatialPlayer {
       <header class="player-card__header">
         <button class="player-card__method listen-control" type="button" aria-pressed="${this.selectedAudio}" aria-label="Listen to ${this.method.label}">
           <h3>${this.method.label}</h3>
+          ${this.method.ours ? '<span class="method-badge">Ours</span>' : ''}
           <span class="listen-marker" aria-hidden="true">
             <i data-lucide="headphones" aria-hidden="true"></i>
             <span>Listening</span>

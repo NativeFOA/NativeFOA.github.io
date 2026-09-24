@@ -87,33 +87,52 @@ function initSoundfield(){
   canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5});addEventListener('resize',resize);resize();requestAnimationFrame(draw)
 }
 
-const vaeSampleIds=['530swnPWJrQ_17','530swnPWJrQ_5','7ZVYcIsEeHo_130','RbFEpkuFCjI_18','RpNrYMA2y6c_110','glZ5cH82ycE_210','nagycDdW04w_10.0','p5Ady9RJyhU_90','u-Hpf2_wzB8_390','voice_o1_ambix'];
+const vaeSamples=[
+  {number:'01',id:'530swnPWJrQ_17'},
+  {number:'02',id:'530swnPWJrQ_5'},
+  {number:'04',id:'RbFEpkuFCjI_18'},
+  {number:'07',id:'nagycDdW04w_10.0'},
+  {number:'09',id:'u-Hpf2_wzB8_390'},
+];
 let vaeListReady=false;
 function sizeVaeFrame(frame){
   try{
     const doc=frame.contentDocument;
     const resize=()=>{frame.style.height=`${Math.max(520,Math.ceil(doc.documentElement.scrollHeight))}px`};
-    new ResizeObserver(resize).observe(doc.body);
+    frame.vaeResizeObserver?.disconnect();
+    frame.vaeResizeObserver=new ResizeObserver(resize);
+    frame.vaeResizeObserver.observe(doc.body);
     resize();
   }catch(error){console.warn('VAE demo frame sizing is unavailable.',error)}
+}
+function mountVaeFrame(frame){
+  if(frame.dataset.mounted==='true')return;
+  frame.dataset.mounted='true';
+  frame.addEventListener('load',()=>sizeVaeFrame(frame),{once:true});
+  frame.src=frame.dataset.src;
+}
+function unmountVaeFrame(frame){
+  if(frame.dataset.mounted!=='true')return;
+  frame.dataset.mounted='false';
+  frame.vaeResizeObserver?.disconnect();
+  frame.vaeResizeObserver=null;
+  frame.src='about:blank';
 }
 function initVaeList(){
   if(vaeListReady)return;
   vaeListReady=true;
   const list=document.querySelector('#vae-list');
-  vaeSampleIds.forEach((sampleId,index)=>{
+  vaeSamples.forEach(sample=>{
     const item=document.createElement('article');
     item.className='vae-case';
-    item.innerHTML=`<div class="vae-case-number">${String(index+1).padStart(2,'0')}</div><iframe class="vae-frame" data-src="vae-demo/index.html#sample=${encodeURIComponent(sampleId)}" title="FOA VAE reconstruction example ${String(index+1).padStart(2,'0')}" loading="lazy" allow="autoplay; fullscreen"></iframe>`;
+    item.innerHTML=`<div class="vae-case-number">${sample.number}</div><iframe class="vae-frame" data-src="vae-demo/index.html#sample=${encodeURIComponent(sample.id)}" title="FOA VAE reconstruction example ${sample.number}" loading="lazy" allow="autoplay; fullscreen"></iframe>`;
     list.append(item);
   });
   const frames=[...list.querySelectorAll('.vae-frame')];
   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-    if(!entry.isIntersecting)return;
     const frame=entry.target;
-    if(!frame.hasAttribute('src')){frame.addEventListener('load',()=>sizeVaeFrame(frame),{once:true});frame.src=frame.dataset.src}
-    observer.unobserve(frame);
-  }),{rootMargin:'1400px 0px'});
+    entry.isIntersecting?mountVaeFrame(frame):unmountVaeFrame(frame);
+  }),{rootMargin:'500px 0px'});
   frames.forEach(frame=>observer.observe(frame));
 }
 function showPage(page,{scroll=false}={}){

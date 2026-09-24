@@ -3,15 +3,15 @@ import {
   METHODS,
   SAMPLES,
   getSample,
-} from './demo-data.js';
-import { ComparisonCoordinator } from './comparison-coordinator.js?v=nativefoa-4';
+} from './demo-data.js?v=nativefoa-7';
+import { ComparisonCoordinator } from './comparison-coordinator.js?v=nativefoa-7';
 import {
   DISPLAY_MODES,
   resolveSeekControlValue,
 } from './comparison-state.js';
 import { FrameScheduler } from './frame-scheduler.js';
 import { moveTabIndex, resolveInitialSampleId } from './sample-state.js';
-import { SpatialPlayer } from './spatial-player.js?v=20260901-2';
+import { SpatialPlayer } from './spatial-player.js?v=nativefoa-7';
 import { formatTime } from './view-math.js';
 
 const tabsElement = document.querySelector('#sample-tabs');
