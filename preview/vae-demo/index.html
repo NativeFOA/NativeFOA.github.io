@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f5f7fa">
+    <link rel="icon" href="data:,">
+    <meta
+      name="description"
+      content="AROS interactive spatial-audio reconstruction comparison with 360-degree energy overlays and binaural Ambisonic playback."
+    >
+    <title>NativeFOA — FOA VAE Reconstruction Demo</title>
+    <link rel="preload" href="vendor/InstrumentSans.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css?v=nativefoa-5">
+  </head>
+  <body>
+    <main id="top">
+      <section class="sample-band" aria-labelledby="sample-nav-title">
+        <div class="sample-band__inner">
+          <div class="section-index">
+            <span>01</span>
+            <h2 id="sample-nav-title">Choose a sample</h2>
+          </div>
+          <div
+            class="sample-tabs"
+            id="sample-tabs"
+            role="tablist"
+            aria-label="FOA test samples"
+          ></div>
+        </div>
+      </section>
+
+      <section class="comparison-section" aria-labelledby="comparison-title">
+        <div class="comparison-heading">
+          <div class="section-index">
+            <span>02</span>
+            <div>
+              <h2 id="comparison-title">Reconstruction comparison</h2>
+              <p class="selected-sample" id="selected-sample" translate="no">Loading samples…</p>
+            </div>
+          </div>
+          <div class="comparison-tools">
+            <div class="display-mode-control" role="group" aria-label="Video display mode">
+              <button type="button" data-display-mode="spatial" aria-pressed="true">Spatial</button>
+              <button type="button" data-display-mode="flat" aria-pressed="false">Flat</button>
+            </div>
+            <label class="sync-control">
+              <input id="sync-toggle" type="checkbox">
+              <span class="sync-control__track" aria-hidden="true"></span>
+              <span>Sync</span>
+            </label>
+          </div>
+        </div>
+
+        <section class="shared-transport" id="shared-transport" hidden aria-label="Synchronized playback controls">
+          <div class="shared-transport__timeline">
+            <input
+              id="shared-seek"
+              type="range"
+              min="0"
+              max="1000"
+              value="0"
+              step="1"
+              aria-label="Synchronized playback position"
+              disabled
+            >
+            <output class="time-label" id="shared-time">0:00 / --:--</output>
+          </div>
+          <div class="shared-transport__commands">
+            <button class="icon-button icon-button--primary" id="shared-play" type="button" aria-label="Play all" title="Play all" disabled>
+              <i data-lucide="play" aria-hidden="true"></i>
+            </button>
+            <button class="icon-button" id="shared-stop" type="button" aria-label="Stop all" title="Stop all" disabled>
+              <i data-lucide="square" aria-hidden="true"></i>
+            </button>
+            <button class="icon-button" id="shared-mute" type="button" aria-label="Mute" title="Mute" disabled>
+              <i data-lucide="volume-2" aria-hidden="true"></i>
+            </button>
+            <label class="volume-control" title="Synchronized volume">
+              <span class="sr-only">Synchronized volume</span>
+              <input id="shared-volume" type="range" min="0" max="1" value="0.85" step="0.01" aria-label="Synchronized volume" disabled>
+            </label>
+          </div>
+        </section>
+
+        <div
+          class="global-status"
+          id="global-status"
+          role="status"
+          aria-live="polite"
+        >
+          Preparing the five comparison players…
+        </div>
+        <div class="player-grid" id="player-grid"></div>
+      </section>
+    </main>
+
+    <noscript>This comparison requires JavaScript and Web Audio.</noscript>
+    <script src="vendor/omnitone.min.js"></script>
+    <script src="vendor/lucide.min.js"></script>
+    <script type="module" src="js/app.js?v=nativefoa-4"></script>
+  </body>
+</html>

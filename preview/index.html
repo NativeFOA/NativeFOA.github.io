@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NativeFOA spatial audio editing — visual redesign concept." />
+    <title>NativeFOA — Redesign Concept</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b111b'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23e9ff60' stroke-width='4'/%3E%3Ccircle cx='32' cy='13' r='5' fill='%23ff5b4d'/%3E%3Cpath d='M32 32L49 42' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css?v=17" />
+    <script src="app.js?v=17" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="NativeFOA home"><span class="brand-mark"></span>NativeFOA</a>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <canvas class="soundfield-canvas" id="soundfield-canvas" aria-hidden="true"></canvas>
+        <div class="hero-shade"></div>
+        <div class="hero-panel">
+          <p class="kicker">NATIVE FOA · IMMERSIVE SOUND FIELD EDITING</p>
+          <h1>NativeFOA</h1>
+          <p class="hero-title">Representation, Editing, and<br />Benchmark for Spatial Audio</p>
+          <p class="hero-copy">FOA audio has been binauralized for demonstration.<br />Headphones are recommended.</p>
+          <div class="hero-actions" aria-label="Project resources">
+            <a class="action action--dark" href="#editor"><span>◉</span>NativeFOA-Editor</a>
+            <a class="action action--dark" href="#vae"><span>◌</span>NativeFOA-VAE</a>
+            <span class="action action--muted"><span>⌘</span>Code <small>SOON</small></span>
+            <span class="action action--muted"><span>◇</span>Dataset <small>SOON</small></span>
+          </div>
+          <a class="jump-link" href="#editor">Explore NativeFOA <span>↓</span></a>
+        </div>
+        <div class="hero-meta hero-meta--left">NATIVE FOA DOMAIN<br />BINAURAL PREVIEW</div>
+        <div class="hero-meta hero-meta--right">REMOVE · MOVE · REPLACE</div>
+      </section>
+
+      <nav class="module-switcher" aria-label="NativeFOA components">
+        <button class="module-button" data-page="vae" type="button"><span>01</span>NativeFOA-VAE</button>
+        <button class="module-button is-active" data-page="editor" type="button"><span>02</span>NativeFOA-Editor</button>
+        <button class="module-button" data-page="bench" type="button"><span>03</span>NativeFOA-Bench</button>
+      </nav>
+
+      <section class="demo-section page-panel" id="editor" data-page-panel="editor">
+        <div class="task-switcher" role="tablist" aria-label="Editing task">
+          <button class="task-button is-active" data-task="remove" role="tab" aria-selected="true"><span>01</span>Remove</button>
+          <button class="task-button" data-task="move" role="tab" aria-selected="false"><span>02</span>Move</button>
+          <button class="task-button" data-task="replace" role="tab" aria-selected="false"><span>03</span>Replace</button>
+        </div>
+
+        <div class="case-list" id="case-list" aria-live="polite"></div>
+      </section>
+
+      <section class="vae-section page-panel" id="vae" data-page-panel="vae" aria-labelledby="vae-demo-title" hidden>
+        <div class="vae-heading">
+          <div>
+            <p class="kicker">NATIVE FOA · REPRESENTATION</p>
+            <h2 id="vae-demo-title">FOA VAE Reconstruction Demo</h2>
+          </div>
+          <p>Ten reconstruction examples with synchronized spatial views. Use the group transport to play all methods together, or pause and resume any method independently.</p>
+        </div>
+        <div class="vae-list" id="vae-list"></div>
+      </section>
+
+      <section class="bench-section page-panel" id="bench" data-page-panel="bench" aria-labelledby="bench-title" hidden>
+        <p class="kicker">NATIVE FOA · EVALUATION</p>
+        <h2 id="bench-title">NativeFOA-Bench</h2>
+        <p>Evaluation across Move, Remove, and Replace, covering spatial accuracy, audio fidelity, and non-target preservation.</p>
+        <div class="bench-placeholder">
+          <span>Benchmark interface</span>
+          <strong>Coming soon</strong>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>NativeFOA</span>
+      <span>Spatial audio editing in the native FOA domain</span>
+    </footer>
+  </body>
+</html>
